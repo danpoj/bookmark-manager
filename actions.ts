@@ -22,11 +22,6 @@ export async function getTitleFromURL({ url }: { url: string }) {
       return res.text();
     })
     .then((body: string) => {
-      const match = body.match(/<title>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
-      if (!match || typeof match[1] !== 'string') return 'No title found'; // if no title found, return "No title found"
-      return match[1];
-    })
-    .then((body: string) => {
       const match = body.match(/<title([^<]*)>([^<]*)<\/title>/); // regular expression to parse contents of the <title> tag
       if (!match || typeof match[match.length - 1] !== 'string')
         return 'No title found'; // if no title found, return "No title found"

@@ -1,12 +1,13 @@
 import BlurFade from '@/components/ui/blur-fade';
+import { Button } from '@/components/ui/button';
 import SparklesText from '@/components/ui/sparkles-text';
 import Image from 'next/image';
-import { SidebarLogin } from './sidebar-login';
+import Link from 'next/link';
 
-export const Sidebar = () => {
+export default function NotFound() {
   return (
-    <aside className='relative py-6 hidden lg:flex flex-col gap-6 items-end h-screen overflow-y-scroll pr-4'>
-      <section className='flex flex-col items-end gap-4'>
+    <div className='pt-20 max-w-[40rem] mx-auto flex flex-col items-center gap-6 z-5'>
+      <section className='flex flex-col items-center gap-4'>
         <BlurFade delay={0.15} inView className='flex'>
           <SparklesText
             text='Bookmarks'
@@ -39,7 +40,18 @@ export const Sidebar = () => {
         className='w-52'
       />
 
-      <SidebarLogin />
-    </aside>
+      <div className='flex flex-col'>
+        <Image
+          src='/ddung-e-doodle.svg'
+          alt='ddung-e'
+          width={400}
+          height={400}
+          className='w-52'
+        />
+        <Button asChild className='w-full' variant='outline'>
+          <Link href='/login'>Go Home</Link>
+        </Button>
+      </div>
+    </div>
   );
-};
+}

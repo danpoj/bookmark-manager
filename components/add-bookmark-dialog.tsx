@@ -20,10 +20,11 @@ import {
 import { Input } from '@/components/ui/input';
 import { Tables } from '@/database.types';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { LoadingDots } from './loading-dots';
 
 const formSchema = z.object({
   url: z.string().url({ message: '주소를 다시 확인해주세요.' }),
@@ -61,8 +62,8 @@ export const AddBookmarkDialog = ({
   return (
     <Dialog open={openDialog} onOpenChange={(o) => setOpenDialog(o)}>
       <DialogTrigger asChild>
-        <Button variant='outline' className='font-mono'>
-          🔗
+        <Button size='icon' variant='outline' className='size-8'>
+          <PlusIcon className='size-3.5' />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -94,10 +95,7 @@ export const AddBookmarkDialog = ({
                         form='form'
                       >
                         {addBookmarkMutation.isPending ? (
-                          <>
-                            <span>Adding...</span>
-                            <Loader2 className='animate-spin size-4' />
-                          </>
+                          <LoadingDots className='size-[4px]' />
                         ) : (
                           <span>Add +</span>
                         )}

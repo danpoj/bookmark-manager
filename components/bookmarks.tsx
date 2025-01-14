@@ -16,11 +16,11 @@ import { useEffect, useRef, useState } from 'react';
 import { useSnapshot } from 'valtio';
 import { editStore } from './store/edit-store';
 import { Input } from './ui/input';
+import { BookmarksSkeleton } from './skeletons';
 
 export const Bookmarks = () => {
   const [folderId] = useQueryState('f');
   const optimisticUpdateBookmarkOrder = useOptimisticUpdateBookmarkOrder();
-  const [f] = useQueryState('f');
 
   const {
     data: bookmarks,
@@ -28,34 +28,20 @@ export const Bookmarks = () => {
     isError,
   } = useBookmarks({ folderId: folderId! });
 
-  if (isPending)
-    return (
-      <div className='p-4 flex items-center justify-center'>
-        <Loader2 className='animate-spin size-4' />
-      </div>
-    );
+  if (isPending) return <BookmarksSkeleton />;
 
   if (isError) return 'error!';
 
   if (bookmarks.length === 0)
     return (
-      <div className='mt-6 flex items-center justify-center relative'>
+      <div className='mt-6 flex items-center justify-center relative flex-col'>
         <Image
-          src='/illustration_4.svg'
-          alt='not found cat 😿'
-          width={200}
-          height={200}
+          src='/leaf.svg'
+          alt='not found'
+          width={80}
+          height={80}
+          className='rotate-[110deg]'
         />
-        <div className='absolute -top-8 right-6 flex flex-col items-end gap-4'>
-          <Image
-            src='/arrow-top-right.svg'
-            alt='arrow top right'
-            width={60}
-            height={60}
-            className=''
-          />
-          <p className='font-mono'>Add Bookmarks! 👋🏻</p>
-        </div>
       </div>
     );
 
@@ -74,7 +60,7 @@ export const Bookmarks = () => {
             bookmarks,
             destinationIndex,
             sourceIndex,
-            folderId: String(f),
+            folderId: String(folderId),
           });
         }}
       >

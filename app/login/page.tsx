@@ -1,12 +1,12 @@
+import { SidebarLogin } from '@/components/sidebar-login';
 import BlurFade from '@/components/ui/blur-fade';
 import SparklesText from '@/components/ui/sparkles-text';
 import Image from 'next/image';
-import { SidebarLogin } from './sidebar-login';
 
-export const Sidebar = () => {
+export default function Page() {
   return (
-    <aside className='relative py-6 hidden lg:flex flex-col gap-6 items-end h-screen overflow-y-scroll pr-4'>
-      <section className='flex flex-col items-end gap-4'>
+    <div className='pt-20 max-w-[40rem] mx-auto flex flex-col items-center gap-6'>
+      <section className='flex flex-col items-center gap-4'>
         <BlurFade delay={0.15} inView className='flex'>
           <SparklesText
             text='Bookmarks'
@@ -39,7 +39,9 @@ export const Sidebar = () => {
         className='w-52'
       />
 
-      <SidebarLogin />
-    </aside>
+      <div className='w-full max-w-[26rem]'>
+        <SidebarLogin />
+      </div>
+    </div>
   );
-};
+}

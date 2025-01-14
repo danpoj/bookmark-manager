@@ -4,6 +4,7 @@ import { getTitleFromURL } from './actions';
 import { Tables } from './database.types';
 import { dbClient } from './lib/supabase/client';
 import { decodeHTMLEntities } from './lib/utils';
+import { useRouter } from 'next/navigation';
 
 export const useFolders = () => {
   const { data: user } = useUser();
@@ -84,12 +85,14 @@ export const useLoginMutation = () => {
 
 export const useLogoutMutation = () => {
   const client = useQueryClient();
+  const router = useRouter();
 
   return useMutation({
     mutationFn: async () => {
       const supabase = dbClient();
       await supabase.auth.signOut();
       client.invalidateQueries();
+      router.refresh();
     },
   });
 };

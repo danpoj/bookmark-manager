@@ -1,15 +1,16 @@
+import { ParticlesBackground } from '@/components/particles-background';
 import { Providers } from '@/components/providers';
-import { Sidebar } from '@/components/sidebar';
-import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
-import Image from 'next/image';
-import './globals.css';
+import { ThemeProvider } from '@/components/theme-provider';
+import { dbServer } from '@/lib/supabase/server';
 import {
   dehydrate,
   HydrationBoundary,
   QueryClient,
 } from '@tanstack/react-query';
-import { dbServer } from '@/lib/supabase/server';
+import type { Metadata } from 'next';
+import { Geist, Geist_Mono } from 'next/font/google';
+import Image from 'next/image';
+import './globals.css';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -46,27 +47,32 @@ export default async function RootLayout({
   });
 
   return (
-    <html lang='en'>
+    <html lang='en' suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} bg-[#fafafa] overscroll-none overflow-y-hidden`}
+        className={`${geistSans.variable} ${geistMono.variable} bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden`}
       >
-        <Providers>
-          <HydrationBoundary state={dehydrate(queryClient)}>
-            <main className='flex justify-center'>
-              <Sidebar />
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ParticlesBackground />
+          <Providers>
+            <HydrationBoundary state={dehydrate(queryClient)}>
               {children}
-            </main>
 
-            <Image
-              unoptimized
-              src='/wave.svg'
-              alt='background pattern'
-              width={400}
-              height={400}
-              className='absolute inset-0 w-full h-full -z-50 object-cover'
-            />
-          </HydrationBoundary>
-        </Providers>
+              <Image
+                unoptimized
+                src='/wave-light.svg'
+                alt='background pattern'
+                width={400}
+                height={400}
+                className='absolute inset-0 w-full h-full -z-50 object-cover'
+              />
+            </HydrationBoundary>
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

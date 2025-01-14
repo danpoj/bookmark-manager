@@ -47,7 +47,7 @@ export const RemoveFolderDialog = ({
             folder and remove your bookmarks from our servers.
           </DialogDescription>
 
-          {Array.isArray(bookmarks) && bookmarks.length > 0 ? (
+          {Array.isArray(bookmarks) && bookmarks.length > 0 && (
             <div className='max-h-[10.3rem] overflow-y-scroll'>
               {bookmarks.map((bookmark) => (
                 <div
@@ -66,10 +66,6 @@ export const RemoveFolderDialog = ({
                 </div>
               ))}
             </div>
-          ) : (
-            <p className='text-center pt-2 text-muted-foreground text-sm'>
-              Empty folder.
-            </p>
           )}
         </DialogHeader>
         <DialogFooter>

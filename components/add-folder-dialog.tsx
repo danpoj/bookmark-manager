@@ -13,10 +13,11 @@ import {
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Loader2 } from 'lucide-react';
+import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
+import { LoadingDots } from './loading-dots';
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -43,7 +44,9 @@ export const AddFolderDialog = () => {
   return (
     <Dialog open={open} onOpenChange={(o) => setOpen(o)}>
       <DialogTrigger asChild>
-        <Button variant='outline'>📂</Button>
+        <Button size='icon' variant='outline' className='size-8'>
+          <PlusIcon className='size-3.5' />
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -72,10 +75,7 @@ export const AddFolderDialog = () => {
                         type='submit'
                       >
                         {addFolderMutation.isPending ? (
-                          <>
-                            <span>Adding...</span>
-                            <Loader2 className='animate-spin size-4' />
-                          </>
+                          <LoadingDots className='size-[4px]' />
                         ) : (
                           <span>Add +</span>
                         )}

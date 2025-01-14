@@ -1,11 +1,9 @@
-'use client';
-
 import Image from 'next/image';
 
 export const InitialFallback = () => {
   return (
     <aside className='flex flex-col items-center pt-20 gap-6'>
-      <section className='flex flex-col items-end gap-4'>
+      <section className='hidden sm:flex flex-col items-end gap-4'>
         <div className='flex'>
           <h1 className='text-5xl font-bold'>Bookmarks</h1>
           <Image

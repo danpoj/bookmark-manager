@@ -33,6 +33,7 @@ import { useForm } from 'react-hook-form';
 import { FaRegFolderOpen } from 'react-icons/fa';
 import { z } from 'zod';
 import { LoadingDots } from './loading-dots';
+import { toast } from 'sonner';
 
 const formSchema = z.object({
   folderName: z.string(),
@@ -59,6 +60,10 @@ export const MoveBookmarkDialog = ({
     const selectedFolder = folders.find((f) => f.name === values.folderName);
 
     if (!folder || !selectedFolder) return;
+    if (folder.id === selectedFolder.id) {
+      toast.info('same folder.');
+      return;
+    }
 
     moveBookmarkFolderMutation.mutate(
       {

@@ -357,7 +357,7 @@ export const useMoveBookmarkFolderMutation = () => {
       destinationFolderId: Tables<'folders'>['id'];
     }
   >({
-    mutationFn: async ({ bookmarkId, sourceFolderId, destinationFolderId }) => {
+    mutationFn: async ({ bookmarkId, destinationFolderId }) => {
       if (!user) return;
 
       const supabase = dbClient();
@@ -371,24 +371,33 @@ export const useMoveBookmarkFolderMutation = () => {
         .limit(1)
         .single();
 
-      if (!data) return;
+      if (!data) {
+        await supabase
+          .from('bookmarks')
+          .update({
+            folder_id: destinationFolderId,
+            order_number: Date.now(),
+          })
+          .eq('id', bookmarkId);
 
-      const { error } = await supabase
+        return;
+      }
+
+      await supabase
         .from('bookmarks')
         .update({
           folder_id: destinationFolderId,
           order_number: data?.order_number / 2,
         })
         .eq('id', bookmarkId);
-
-      if (!error) {
-        client.invalidateQueries({
-          queryKey: ['bookmarks', String(sourceFolderId)],
-        });
-        client.invalidateQueries({
-          queryKey: ['bookmarks', String(destinationFolderId)],
-        });
-      }
+    },
+    onSuccess: (_, { sourceFolderId, destinationFolderId }) => {
+      client.invalidateQueries({
+        queryKey: ['bookmarks', String(sourceFolderId)],
+      });
+      client.invalidateQueries({
+        queryKey: ['bookmarks', String(destinationFolderId)],
+      });
     },
   });
 };

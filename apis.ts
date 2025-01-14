@@ -1,10 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { getTitleFromURL } from './actions';
 import { Tables } from './database.types';
 import { dbClient } from './lib/supabase/client';
 import { decodeHTMLEntities } from './lib/utils';
-import { useRouter } from 'next/navigation';
 
 export const useFolders = () => {
   const { data: user } = useUser();
@@ -139,7 +138,10 @@ export const useAddBookmarkMutation = () => {
     }
   >({
     mutationFn: async ({ url, folderId }) => {
-      const title = await getTitleFromURL({ url });
+      const { title } = (await fetch(`/api/title?url=${url}`).then((r) =>
+        r.json()
+      )) as { title: string };
+
       const decodedTitle = decodeHTMLEntities({ str: title });
 
       const supabase = dbClient();

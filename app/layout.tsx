@@ -79,9 +79,9 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning>
+    <html lang='en' suppressHydrationWarning className='text-[19px]'>
       <body
-        className={`bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden`}
+        className={`bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden text-[18px]`}
       >
         <Suspense fallback={<InitialFallback />}>
           <Body>{children}</Body>

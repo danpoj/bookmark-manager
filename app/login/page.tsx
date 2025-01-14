@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 export default function Page() {
   return (
-    <div className='pt-20 max-w-[40rem] mx-auto flex flex-col items-center gap-6'>
+    <div className='px-2 pb-2 pt-20 max-w-[40rem] mx-auto flex flex-col items-center gap-6'>
       <section className='flex flex-col items-center gap-4'>
         <BlurFade delay={0.15} inView className='flex'>
           <SparklesText

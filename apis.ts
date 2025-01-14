@@ -341,3 +341,52 @@ export const useOptimisticUpdateBookmarkOrder = () => {
     },
   });
 };
+
+export const useMoveBookmarkFolderMutation = () => {
+  const { data: user } = useUser();
+  const client = useQueryClient();
+
+  return useMutation<
+    void,
+    Error,
+    {
+      bookmarkId: Tables<'bookmarks'>['id'];
+      sourceFolderId: Tables<'folders'>['id'];
+      destinationFolderId: Tables<'folders'>['id'];
+    }
+  >({
+    mutationFn: async ({ bookmarkId, sourceFolderId, destinationFolderId }) => {
+      if (!user) return;
+
+      const supabase = dbClient();
+
+      const { data } = await supabase
+        .from('bookmarks')
+        .select('order_number')
+        .eq('user_id', user.id)
+        .eq('folder_id', Number(destinationFolderId))
+        .order('order_number', { ascending: true })
+        .limit(1)
+        .single();
+
+      if (!data) return;
+
+      const { error } = await supabase
+        .from('bookmarks')
+        .update({
+          folder_id: destinationFolderId,
+          order_number: data?.order_number / 2,
+        })
+        .eq('id', bookmarkId);
+
+      if (!error) {
+        client.invalidateQueries({
+          queryKey: ['bookmarks', String(sourceFolderId)],
+        });
+        client.invalidateQueries({
+          queryKey: ['bookmarks', String(destinationFolderId)],
+        });
+      }
+    },
+  });
+};

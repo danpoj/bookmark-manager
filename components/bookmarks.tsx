@@ -3,6 +3,7 @@
 import {
   useBookmarks,
   useDeleteBookmarkMutation,
+  useFolders,
   useOptimisticUpdateBookmarkOrder,
   useUpdateBookmarkTitleMutation,
 } from '@/apis';
@@ -14,9 +15,10 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import { useEffect, useRef, useState } from 'react';
 import { useSnapshot } from 'valtio';
+import { MoveBookmarkDialog } from './move-bookmark-dialog';
+import { BookmarksSkeleton } from './skeletons';
 import { editStore } from './store/edit-store';
 import { Input } from './ui/input';
-import { BookmarksSkeleton } from './skeletons';
 
 export const Bookmarks = () => {
   const [folderId] = useQueryState('f');
@@ -24,13 +26,19 @@ export const Bookmarks = () => {
 
   const {
     data: bookmarks,
-    isPending,
-    isError,
+    isPending: isPendingBookmarks,
+    isError: isErrorBookmarks,
   } = useBookmarks({ folderId: folderId! });
 
-  if (isPending) return <BookmarksSkeleton />;
+  const {
+    data: folders,
+    isPending: isPendingFolders,
+    isError: isErrorFolders,
+  } = useFolders();
 
-  if (isError) return 'error!';
+  if (isPendingBookmarks || isPendingFolders) return <BookmarksSkeleton />;
+
+  if (isErrorBookmarks || isErrorFolders) return 'error!';
 
   if (bookmarks.length === 0)
     return (
@@ -44,6 +52,10 @@ export const Bookmarks = () => {
         />
       </div>
     );
+
+  const currentFolder = folders.find(
+    (folder) => folder.id === Number(folderId)
+  );
 
   return (
     <div className='flex flex-col w-full'>
@@ -89,7 +101,11 @@ export const Bookmarks = () => {
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
                     >
-                      <Bookmark bookmark={bookmark} />
+                      <Bookmark
+                        bookmark={bookmark}
+                        folder={currentFolder ?? null}
+                        folders={folders}
+                      />
                     </div>
                   )}
                 </Draggable>
@@ -103,7 +119,15 @@ export const Bookmarks = () => {
   );
 };
 
-const Bookmark = ({ bookmark }: { bookmark: Tables<'bookmarks'> }) => {
+const Bookmark = ({
+  bookmark,
+  folder,
+  folders,
+}: {
+  bookmark: Tables<'bookmarks'>;
+  folders: Tables<'folders'>[];
+  folder: Tables<'folders'> | null;
+}) => {
   const [folderId] = useQueryState('f');
   const { isManaging } = useSnapshot(editStore);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
@@ -123,6 +147,14 @@ const Bookmark = ({ bookmark }: { bookmark: Tables<'bookmarks'> }) => {
         rel='noopener noreferrer'
         className='flex gap-2 items-center px-2 h-9 hover:bg-primary/5 w-full'
       >
+        {isManaging && (
+          <MoveBookmarkDialog
+            bookmark={bookmark}
+            folder={folder}
+            folders={folders}
+          />
+        )}
+
         <Image
           unoptimized
           src={getFaviconURL({ domain: bookmark.url })}

@@ -1,18 +1,12 @@
+import { InitialFallback } from '@/components/initial-fallback';
 import { ParticlesBackground } from '@/components/particles-background';
 import { Providers } from '@/components/providers';
 import { ThemeProvider } from '@/components/theme-provider';
-import { dbServer } from '@/lib/supabase/server';
 import { siteConfig } from '@/site-config';
-import {
-  dehydrate,
-  HydrationBoundary,
-  QueryClient,
-} from '@tanstack/react-query';
 import type { Metadata, Viewport } from 'next';
 import Image from 'next/image';
-import { ReactNode, Suspense } from 'react';
+import { Suspense } from 'react';
 import './globals.css';
-import { InitialFallback } from '@/components/initial-fallback';
 
 export const metadata: Metadata = {
   applicationName: '로나오프',
@@ -84,49 +78,28 @@ export default async function RootLayout({
         className={`bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden text-[18px]`}
       >
         <Suspense fallback={<InitialFallback />}>
-          <Body>{children}</Body>
+          <ThemeProvider
+            attribute='class'
+            defaultTheme='system'
+            enableSystem
+            disableTransitionOnChange
+          >
+            <ParticlesBackground />
+            <Providers>
+              {children}
+
+              <Image
+                unoptimized
+                src='/wave-light.svg'
+                alt='background pattern'
+                width={400}
+                height={400}
+                className='absolute inset-0 w-full h-full -z-50 object-cover'
+              />
+            </Providers>
+          </ThemeProvider>
         </Suspense>
       </body>
     </html>
   );
 }
-
-const Body = async ({ children }: { children: ReactNode }) => {
-  const supabase = await dbServer();
-  const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    staleTime: Infinity,
-    queryKey: ['user'],
-    queryFn: async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      return user;
-    },
-  });
-
-  return (
-    <ThemeProvider
-      attribute='class'
-      defaultTheme='system'
-      enableSystem
-      disableTransitionOnChange
-    >
-      <ParticlesBackground />
-      <Providers>
-        <HydrationBoundary state={dehydrate(queryClient)}>
-          {children}
-
-          <Image
-            unoptimized
-            src='/wave-light.svg'
-            alt='background pattern'
-            width={400}
-            height={400}
-            className='absolute inset-0 w-full h-full -z-50 object-cover'
-          />
-        </HydrationBoundary>
-      </Providers>
-    </ThemeProvider>
-  );
-};

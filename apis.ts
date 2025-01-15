@@ -3,15 +3,14 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Tables } from './database.types';
 import { dbClient } from './lib/supabase/client';
-import { decodeHTMLEntities } from './lib/utils';
+import { decodeHTMLEntities, getSession } from './lib/utils';
 
 export const useFolders = () => {
-  const { data: user } = useUser();
-
   return useQuery({
     queryKey: ['folders'],
     queryFn: async () => {
       const supabase = dbClient();
+      const user = await getSession();
 
       if (!user) return [];
 
@@ -27,13 +26,12 @@ export const useFolders = () => {
 };
 
 export const useBookmarks = ({ folderId }: { folderId: string }) => {
-  const { data: user } = useUser();
-
   return useQuery({
     enabled: !!folderId,
     queryKey: ['bookmarks', folderId],
     queryFn: async () => {
       const supabase = dbClient();
+      const user = await getSession();
 
       if (!user) return [];
 
@@ -54,10 +52,8 @@ export const useUser = () => {
     staleTime: Infinity,
     queryKey: ['user'],
     queryFn: async () => {
-      const supabase = dbClient();
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      const user = await getSession();
+
       return user;
     },
   });
@@ -98,7 +94,6 @@ export const useLogoutMutation = () => {
 
 export const useAddFolderMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -109,6 +104,7 @@ export const useAddFolderMutation = () => {
   >({
     mutationFn: async ({ name }) => {
       const supabase = dbClient();
+      const user = await getSession();
 
       if (!user) {
         toast.error('unauthorized');
@@ -127,7 +123,6 @@ export const useAddFolderMutation = () => {
 
 export const useAddBookmarkMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -145,6 +140,7 @@ export const useAddBookmarkMutation = () => {
       const decodedTitle = decodeHTMLEntities({ str: title });
 
       const supabase = dbClient();
+      const user = await getSession();
 
       if (!user) {
         toast.error('unauthorized');
@@ -170,7 +166,6 @@ export const useAddBookmarkMutation = () => {
 
 export const useDeleteBookmarkMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -178,6 +173,7 @@ export const useDeleteBookmarkMutation = () => {
     { bookmarkId: Tables<'bookmarks'>['id']; folderId: string }
   >({
     mutationFn: async ({ bookmarkId, folderId }) => {
+      const user = await getSession();
       if (!user) return;
 
       const supabase = dbClient();
@@ -196,7 +192,6 @@ export const useDeleteBookmarkMutation = () => {
 
 export const useUpdateBookmarkTitleMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -208,6 +203,8 @@ export const useUpdateBookmarkTitleMutation = () => {
     }
   >({
     mutationFn: async ({ title, bookmarkId, folderId }) => {
+      const user = await getSession();
+
       if (!user) return;
 
       const supabase = dbClient();
@@ -226,10 +223,10 @@ export const useUpdateBookmarkTitleMutation = () => {
 
 export const useDeleteFolderMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<void, Error, { folderId: Tables<'folders'>['id'] }>({
     mutationFn: async ({ folderId }) => {
+      const user = await getSession();
       if (!user) return;
 
       const supabase = dbClient();
@@ -247,7 +244,6 @@ export const useDeleteFolderMutation = () => {
 
 export const useRenameFolderMutation = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -255,6 +251,7 @@ export const useRenameFolderMutation = () => {
     { folderId: Tables<'folders'>['id']; name: Tables<'folders'>['name'] }
   >({
     mutationFn: async ({ folderId, name }) => {
+      const user = await getSession();
       if (!user) return;
 
       const supabase = dbClient();
@@ -271,7 +268,6 @@ export const useRenameFolderMutation = () => {
 
 export const useOptimisticUpdateBookmarkOrder = () => {
   const client = useQueryClient();
-  const { data: user } = useUser();
 
   return useMutation<
     void,
@@ -305,6 +301,8 @@ export const useOptimisticUpdateBookmarkOrder = () => {
             2;
         }
       }
+
+      const user = await getSession();
 
       if (!user) return;
 
@@ -345,7 +343,6 @@ export const useOptimisticUpdateBookmarkOrder = () => {
 };
 
 export const useMoveBookmarkFolderMutation = () => {
-  const { data: user } = useUser();
   const client = useQueryClient();
 
   return useMutation<
@@ -358,6 +355,8 @@ export const useMoveBookmarkFolderMutation = () => {
     }
   >({
     mutationFn: async ({ bookmarkId, destinationFolderId }) => {
+      const user = await getSession();
+
       if (!user) return;
 
       const supabase = dbClient();

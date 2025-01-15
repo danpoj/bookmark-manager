@@ -9,7 +9,7 @@ export function WelcomeToast() {
 
     if (window.innerHeight < 850) return;
     if (!isShowWelcomeToast || isShowWelcomeToast !== 'no') {
-      toast('🚀 Welcome to Bookmark Manager!', {
+      toast('🚀 Welcome to Bookmark Manager.', {
         id: 'welcome-toast',
         duration: Infinity,
         onDismiss: () => {
@@ -18,6 +18,13 @@ export function WelcomeToast() {
         description: (
           <>
             Supabase 학습용으로 만든 북마크 관리 사이트입니다.
+            <br />
+            <br />
+            - folders CRUD
+            <br />
+            - bookmarks CRUD
+            <br />
+            - bookmarks drag & drop reordering
             <hr className='my-2' />
             Supabase, Next.js fullstack demo website. <br />
             <a

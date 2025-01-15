@@ -107,7 +107,7 @@ export const MoveBookmarkDialog = ({
               name='folderName'
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className='font-mono'>
+                  <FormLabel>
                     from <span className='font-bold'>{folder?.name}</span> to{' '}
                     <ArrowDownIcon className='inline size-4' />
                   </FormLabel>

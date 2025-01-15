@@ -52,7 +52,7 @@ export const Folders = () => {
 
       {folder ? (
         <div className='flex items-center gap-1 pt-6'>
-          <p className='p-1 text-2xl font-bold font-mono'>{folder.name}</p>
+          <p className='p-1 text-2xl font-bold'>{folder.name}</p>
 
           <div className='flex items-center gap-1'>
             {isManaging && <RenameFolderDialog folder={folder} />}
@@ -60,9 +60,7 @@ export const Folders = () => {
           </div>
         </div>
       ) : (
-        <p className='p-1 pt-7 text-2xl font-bold font-mono'>
-          FOLDER NOT FOUND
-        </p>
+        <p className='p-1 pt-7 text-2xl font-bold'>FOLDER NOT FOUND</p>
       )}
     </div>
   );

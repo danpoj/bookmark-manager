@@ -24,7 +24,7 @@ import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { LoadingDots } from './loading-dots';
+import { LoadingDots } from '@/components/loading-dots';
 
 const formSchema = z.object({
   url: z.string().url({ message: '주소를 다시 확인해주세요.' }),

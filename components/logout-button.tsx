@@ -1,7 +1,7 @@
 'use client';
 
 import { useLogoutMutation } from '@/apis';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 import { LuLogOut } from 'react-icons/lu';
 
 export const LogoutButton = () => {

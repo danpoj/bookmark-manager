@@ -3,7 +3,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import { useState, type ReactNode } from 'react';
-import { Toaster } from './ui/sonner';
+import { Toaster } from '@/components/ui/sonner';
 
 export const Providers = ({ children }: { children: ReactNode }) => {
   const [queryClient] = useState(

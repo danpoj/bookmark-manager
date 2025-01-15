@@ -1,7 +1,7 @@
 import BlurFade from '@/components/ui/blur-fade';
 import SparklesText from '@/components/ui/sparkles-text';
 import Image from 'next/image';
-import { SidebarLogin } from './sidebar-login';
+import { SidebarLogin } from '@/components/sidebar-login';
 
 export const Sidebar = () => {
   return (

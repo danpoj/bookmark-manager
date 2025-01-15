@@ -17,7 +17,7 @@ import { PlusIcon } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { LoadingDots } from './loading-dots';
+import { LoadingDots } from '@/components/loading-dots';
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),

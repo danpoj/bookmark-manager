@@ -1,8 +1,8 @@
 'use client';
 
 import { useSnapshot } from 'valtio';
-import { editStore } from './store/edit-store';
-import { Button } from './ui/button';
+import { editStore } from '@/components/store/edit-store';
+import { Button } from '@/components/ui/button';
 
 export const ManageButton = () => {
   const { isManaging } = useSnapshot(editStore);

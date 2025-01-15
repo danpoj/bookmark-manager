@@ -32,7 +32,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { FaRegFolderOpen } from 'react-icons/fa';
 import { z } from 'zod';
-import { LoadingDots } from './loading-dots';
+import { LoadingDots } from '@/components/loading-dots';
 import { toast } from 'sonner';
 
 const formSchema = z.object({

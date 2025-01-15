@@ -1,11 +1,9 @@
-import { InitialFallback } from '@/components/initial-fallback';
 import { ParticlesBackground } from '@/components/particles-background';
 import { Providers } from '@/components/providers';
 import { ThemeProvider } from '@/components/theme-provider';
 import { siteConfig } from '@/site-config';
 import type { Metadata, Viewport } from 'next';
 import Image from 'next/image';
-import { Suspense } from 'react';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -77,28 +75,26 @@ export default async function RootLayout({
       <body
         className={`bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden text-[18px]`}
       >
-        <Suspense fallback={<InitialFallback />}>
-          <ThemeProvider
-            attribute='class'
-            defaultTheme='system'
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ParticlesBackground />
-            <Providers>
-              {children}
+        <ThemeProvider
+          attribute='class'
+          defaultTheme='system'
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ParticlesBackground />
+          <Providers>
+            {children}
 
-              <Image
-                unoptimized
-                src='/wave-light.svg'
-                alt='background pattern'
-                width={400}
-                height={400}
-                className='absolute inset-0 w-full h-full -z-50 object-cover'
-              />
-            </Providers>
-          </ThemeProvider>
-        </Suspense>
+            <Image
+              unoptimized
+              src='/wave-light.svg'
+              alt='background pattern'
+              width={400}
+              height={400}
+              className='absolute inset-0 w-full h-full -z-50 object-cover'
+            />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );

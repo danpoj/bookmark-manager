@@ -4,13 +4,13 @@ import { useFolders } from '@/apis';
 import { useQueryState } from 'nuqs';
 import { useEffect } from 'react';
 import { useSnapshot } from 'valtio';
-import { AddBookmarkDialog } from './add-bookmark-dialog';
-import { AddFolderDialog } from './add-folder-dialog';
-import { RemoveFolderDialog } from './remove-folder-dialog';
-import { RenameFolderDialog } from './rename-folder-dialog';
-import { FoldersSkeleton } from './skeletons';
-import { editStore } from './store/edit-store';
-import { Badge } from './ui/badge';
+import { AddBookmarkDialog } from '@/components/add-bookmark-dialog';
+import { AddFolderDialog } from '@/components/add-folder-dialog';
+import { RemoveFolderDialog } from '@/components/remove-folder-dialog';
+import { RenameFolderDialog } from '@/components/rename-folder-dialog';
+import { FoldersSkeleton } from '@/components/skeletons';
+import { editStore } from '@/components/store/edit-store';
+import { Badge } from '@/components/ui/badge';
 
 export const Folders = () => {
   const [folderID, setFolderID] = useQueryState('f');

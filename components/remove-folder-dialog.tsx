@@ -16,7 +16,7 @@ import { XIcon } from 'lucide-react';
 import Image from 'next/image';
 import { useState } from 'react';
 import { toast } from 'sonner';
-import { Button } from './ui/button';
+import { Button } from '@/components/ui/button';
 
 export const RemoveFolderDialog = ({
   folder,

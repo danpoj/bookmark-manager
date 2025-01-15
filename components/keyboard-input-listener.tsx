@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import { editStore } from './store/edit-store';
+import { editStore } from '@/components/store/edit-store';
 
 export const KeyboardEventListener = () => {
   useEffect(() => {

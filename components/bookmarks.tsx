@@ -15,10 +15,10 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import { useEffect, useRef, useState } from 'react';
 import { useSnapshot } from 'valtio';
-import { MoveBookmarkDialog } from './move-bookmark-dialog';
-import { BookmarksSkeleton } from './skeletons';
-import { editStore } from './store/edit-store';
-import { Input } from './ui/input';
+import { MoveBookmarkDialog } from '@/components/move-bookmark-dialog';
+import { BookmarksSkeleton } from '@/components/skeletons';
+import { editStore } from '@/components/store/edit-store';
+import { Input } from '@/components/ui/input';
 
 export const Bookmarks = () => {
   const [folderId] = useQueryState('f');

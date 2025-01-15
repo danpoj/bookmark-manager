@@ -4,8 +4,8 @@ import { FaGithub } from 'react-icons/fa';
 import { FcGoogle } from 'react-icons/fc';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 import { useLoginMutation, useUser } from '@/apis';
-import { LogoutButton } from './logout-button';
-import { Button } from './ui/button';
+import { LogoutButton } from '@/components/logout-button';
+import { Button } from '@/components/ui/button';
 
 export const SidebarLogin = () => {
   const loginMutation = useLoginMutation();

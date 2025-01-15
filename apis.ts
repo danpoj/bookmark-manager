@@ -1,9 +1,9 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
-import { Tables } from './database.types';
-import { dbClient } from './lib/supabase/client';
-import { decodeHTMLEntities, getSession } from './lib/utils';
+import { Tables } from '@/database.types';
+import { dbClient } from '@/lib/supabase/client';
+import { decodeHTMLEntities, getSession } from '@/lib/utils';
 
 export const useFolders = () => {
   return useQuery({

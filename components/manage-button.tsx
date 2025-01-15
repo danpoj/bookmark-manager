@@ -11,8 +11,8 @@ export const ManageButton = () => {
     <Button
       onClick={() => (editStore.isManaging = !isManaging)}
       size='sm'
-      variant='outline'
-      className='uppercase text-xs'
+      variant={isManaging ? 'default' : 'outline'}
+      className='uppercase text-xs border'
     >
       manage
     </Button>

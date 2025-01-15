@@ -13,9 +13,9 @@ export const LogoutButton = () => {
       variant='ghost'
       onClick={() => logoutMutation.mutate()}
       disabled={logoutMutation.isPending}
-      className='space-x-1'
+      className='space-x-1 text-muted-foreground'
     >
-      <span className='uppercase font-semibold'>logout</span>
+      <span className='font-semibold'>logout</span>
       <LuLogOut className='stroke-[3px] rotate-180' />
     </Button>
   );

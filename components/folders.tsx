@@ -39,9 +39,9 @@ export const Folders = () => {
           <Badge
             key={folder.id}
             onClick={() => setFolderID(String(folder.id))}
-            variant={Number(folderID) === folder.id ? 'blue' : 'gray-subtle'}
+            variant={Number(folderID) === folder.id ? 'blue' : 'blue-subtle'}
             size='lg'
-            className='gap-1.5'
+            className='gap-1.5 cursor-pointer'
           >
             {folder.name}
 

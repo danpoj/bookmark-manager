@@ -62,7 +62,7 @@ export const AddBookmarkDialog = ({
   return (
     <Dialog open={openDialog} onOpenChange={(o) => setOpenDialog(o)}>
       <DialogTrigger asChild>
-        <Button size='icon' variant='outline' className='size-8'>
+        <Button size='icon' variant='secondary' className='size-8'>
           <PlusIcon className='size-3.5' />
         </Button>
       </DialogTrigger>

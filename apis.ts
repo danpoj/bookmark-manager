@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Tables } from '@/database.types';
 import { dbClient } from '@/lib/supabase/client';
@@ -48,6 +48,7 @@ export const useBookmarks = ({ folderId }: { folderId: string }) => {
 };
 
 export const useUser = () => {
+  const pathname = usePathname();
   const router = useRouter();
 
   return useQuery({
@@ -56,7 +57,8 @@ export const useUser = () => {
     queryFn: async () => {
       const user = await getSession();
 
-      if (!user) router.replace('/login');
+      if (!user && pathname !== '/login') router.replace('/login');
+      if (user && pathname === '/login') router.replace('/');
 
       return user;
     },

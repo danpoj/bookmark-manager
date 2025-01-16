@@ -48,11 +48,15 @@ export const useBookmarks = ({ folderId }: { folderId: string }) => {
 };
 
 export const useUser = () => {
+  const router = useRouter();
+
   return useQuery({
     staleTime: Infinity,
     queryKey: ['user'],
     queryFn: async () => {
       const user = await getSession();
+
+      if (!user) router.replace('/login');
 
       return user;
     },

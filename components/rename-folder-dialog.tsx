@@ -27,7 +27,7 @@ import { z } from 'zod';
 import { LoadingDots } from '@/components/loading-dots';
 
 const formSchema = z.object({
-  name: z.string().min(1),
+  name: z.string().min(1).max(50),
 });
 
 export const RenameFolderDialog = ({
@@ -62,7 +62,7 @@ export const RenameFolderDialog = ({
   return (
     <Dialog open={openDialog} onOpenChange={(o) => setOpenDialog(o)}>
       <DialogTrigger asChild>
-        <Button variant='outline' className='size-8' size='icon'>
+        <Button variant='secondary' className='size-8' size='icon'>
           <PencilIcon className='size-3.5' />
         </Button>
       </DialogTrigger>

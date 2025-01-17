@@ -7,6 +7,10 @@ import {
   useOptimisticUpdateBookmarkOrder,
   useUpdateBookmarkTitleMutation,
 } from '@/apis';
+import { MoveBookmarkDialog } from '@/components/move-bookmark-dialog';
+import { BookmarkLoader } from '@/components/skeletons';
+import { editStore } from '@/components/store/edit-store';
+import { Input } from '@/components/ui/input';
 import { Tables } from '@/database.types';
 import { cn, getFaviconURL } from '@/lib/utils';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
@@ -15,10 +19,6 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import { useEffect, useRef, useState } from 'react';
 import { useSnapshot } from 'valtio';
-import { MoveBookmarkDialog } from '@/components/move-bookmark-dialog';
-import { BookmarksSkeleton } from '@/components/skeletons';
-import { editStore } from '@/components/store/edit-store';
-import { Input } from '@/components/ui/input';
 
 export const Bookmarks = () => {
   const [folderId] = useQueryState('f');
@@ -36,7 +36,7 @@ export const Bookmarks = () => {
     isError: isErrorFolders,
   } = useFolders();
 
-  if (isPendingBookmarks || isPendingFolders) return <BookmarksSkeleton />;
+  if (isPendingBookmarks || isPendingFolders) return <BookmarkLoader />;
 
   if (isErrorBookmarks || isErrorFolders) return 'error!';
 
@@ -129,7 +129,7 @@ const Bookmark = ({
   folder: Tables<'folders'> | null;
 }) => {
   const [folderId] = useQueryState('f');
-  const { isManaging } = useSnapshot(editStore);
+  const { isManagingBookmarks } = useSnapshot(editStore);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null!);
   const deleteBookmarkMutation = useDeleteBookmarkMutation();
@@ -147,7 +147,7 @@ const Bookmark = ({
         rel='noopener noreferrer'
         className='flex gap-2 items-center px-2 h-9 hover:bg-primary/5 w-full'
       >
-        {isManaging && (
+        {isManagingBookmarks && (
           <MoveBookmarkDialog
             bookmark={bookmark}
             folder={folder}
@@ -200,7 +200,7 @@ const Bookmark = ({
           <p className='text-sm truncate'>{bookmark.title}</p>
         )}
 
-        {isManaging ? (
+        {isManagingBookmarks ? (
           <div className='flex gap-1.5 ml-auto'>
             <button
               disabled={updateBookmarkTitleMutation.isPending}

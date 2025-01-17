@@ -16,6 +16,7 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Tables } from '@/database.types';
@@ -102,6 +103,7 @@ export const AddBookmarkDialog = ({
                       </Button>
                     </div>
                   </FormControl>
+                  <FormMessage />
                 </FormItem>
               )}
             />

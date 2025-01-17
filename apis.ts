@@ -158,6 +158,7 @@ export const useAddBookmarkMutation = () => {
         url,
         user_id: user.id,
         folder_id: Number(folderId),
+        order_number: Date.now(),
       });
 
       if (error) {
@@ -367,32 +368,11 @@ export const useMoveBookmarkFolderMutation = () => {
 
       const supabase = dbClient();
 
-      const { data } = await supabase
-        .from('bookmarks')
-        .select('order_number')
-        .eq('user_id', user.id)
-        .eq('folder_id', Number(destinationFolderId))
-        .order('order_number', { ascending: true })
-        .limit(1)
-        .single();
-
-      if (!data) {
-        await supabase
-          .from('bookmarks')
-          .update({
-            folder_id: destinationFolderId,
-            order_number: Date.now(),
-          })
-          .eq('id', bookmarkId);
-
-        return;
-      }
-
       await supabase
         .from('bookmarks')
         .update({
           folder_id: destinationFolderId,
-          order_number: data?.order_number / 2,
+          order_number: Date.now(),
         })
         .eq('id', bookmarkId);
     },

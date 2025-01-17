@@ -1,6 +1,11 @@
 import { proxy } from 'valtio';
 
-export const editStore = proxy<{ isAdding: boolean; isManaging: boolean }>({
+export const editStore = proxy<{
+  isAdding: boolean;
+  isManagingFolders: boolean;
+  isManagingBookmarks: boolean;
+}>({
   isAdding: false,
-  isManaging: false,
+  isManagingFolders: false,
+  isManagingBookmarks: false,
 });

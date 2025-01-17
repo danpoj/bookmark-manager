@@ -1,7 +1,6 @@
 import { Bookmarks } from '@/components/bookmarks';
 import { Folders } from '@/components/folders';
 import { HeaderLogin } from '@/components/header-login';
-import { ManageButton } from '@/components/manage-button';
 import { Sidebar } from '@/components/sidebar';
 import { ThemeToggler } from '@/components/theme-toggler';
 import { Suspense } from 'react';
@@ -14,10 +13,7 @@ export default function Page() {
       <div className='flex flex-col gap-4 relative w-screen min-h-screen max-w-[40rem] bg-background h-screen border-x'>
         <div className='absolute top-0 inset-x-0 w-full bg-background z-50 p-2 flex justify-between items-center gap-2'>
           <HeaderLogin />
-          <div className='flex items-center gap-2'>
-            <ThemeToggler />
-            <ManageButton />
-          </div>
+          <ThemeToggler />
         </div>
 
         <div className='p-2 pt-[4rem] flex-1 overflow-y-scroll w-full'>

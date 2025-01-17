@@ -1,4 +1,5 @@
 import { Skeleton } from '@/components/ui/skeleton';
+import Image from 'next/image';
 
 export const BookmarksSkeleton = () => {
   return (
@@ -6,6 +7,21 @@ export const BookmarksSkeleton = () => {
       {new Array(6).fill(0).map((_, i) => (
         <Skeleton key={i} className='h-7' />
       ))}
+    </div>
+  );
+};
+
+export const BookmarkLoader = () => {
+  return (
+    <div className='p-4 pt-8 flex items-center justify-center'>
+      <Image
+        unoptimized
+        src='/arrow-rotate-2.svg'
+        width={40}
+        height={40}
+        alt='loader doodle'
+        className='animate-spin'
+      />
     </div>
   );
 };

@@ -10,7 +10,7 @@ export default function Page() {
     <main className='flex justify-center dark:text-[#c0cedc]'>
       <Sidebar />
 
-      <div className='flex flex-col gap-4 relative w-screen min-h-screen max-w-[40rem] bg-background h-screen border-x'>
+      <div className='flex flex-col gap-4 relative w-screen min-h-screen max-w-[32rem] bg-background h-screen border-x'>
         <div className='absolute top-0 inset-x-0 w-full bg-background z-50 p-2 flex justify-between items-center gap-2'>
           <HeaderLogin />
           <ThemeToggler />

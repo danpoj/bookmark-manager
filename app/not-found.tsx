@@ -11,7 +11,7 @@ export default function NotFound() {
         <BlurFade delay={0.15} inView className='flex'>
           <SparklesText
             text='Bookmarks'
-            className='text-5xl'
+            className='text-4xl sm:text-5xl'
             sparklesCount={4}
             as={<h1 />}
           />
@@ -21,11 +21,11 @@ export default function NotFound() {
             alt='doodle!'
             width={100}
             height={100}
-            className='w-16'
+            className='w-12 sm:w-16'
           />
         </BlurFade>
         <BlurFade delay={0.15 * 2} inView>
-          <h2 className='text-pretty text-xl tracking-tighter flex flex-col items-end text-primary/90'>
+          <h2 className='text-pretty text-base sm:text-xl tracking-tighter flex flex-col items-end text-primary/90'>
             <span>supercharge your internet research</span>
             <span>and effortlessly organize your bookmarks.</span>
           </h2>
@@ -37,7 +37,7 @@ export default function NotFound() {
         alt='underline'
         width={400}
         height={200}
-        className='w-52'
+        className='w-40 sm:w-52'
       />
 
       <div className='flex flex-col'>
@@ -46,7 +46,7 @@ export default function NotFound() {
           alt='ddung-e'
           width={400}
           height={400}
-          className='w-52'
+          className='w-40 sm:w-52'
         />
         <Button asChild className='w-full' variant='outline'>
           <Link href='/login'>Go Home</Link>

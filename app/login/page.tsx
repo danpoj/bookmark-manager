@@ -10,7 +10,7 @@ export default function Page() {
         <BlurFade delay={0.15} inView className='flex'>
           <SparklesText
             text='Bookmarks'
-            className='text-5xl'
+            className='text-4xl sm:text-5xl'
             sparklesCount={4}
             as={<h1 />}
           />
@@ -20,11 +20,11 @@ export default function Page() {
             alt='doodle!'
             width={100}
             height={100}
-            className='w-16'
+            className='w-12 sm:w-16'
           />
         </BlurFade>
         <BlurFade delay={0.15 * 2} inView>
-          <h2 className='text-pretty text-xl tracking-tighter flex flex-col items-end text-primary/90'>
+          <h2 className='text-pretty text-base sm:text-xl tracking-tighter flex flex-col items-end text-primary/90'>
             <span>supercharge your internet research</span>
             <span>and effortlessly organize your bookmarks.</span>
           </h2>

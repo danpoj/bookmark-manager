@@ -15,7 +15,6 @@ export const BookmarkLoader = () => {
   return (
     <div className='p-4 pt-8 flex items-center justify-center'>
       <Image
-        unoptimized
         src='/arrow-rotate-2.svg'
         width={40}
         height={40}

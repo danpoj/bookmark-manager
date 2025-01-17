@@ -24,7 +24,6 @@ export default function Page() {
                 className='absolute bottom-0'
               />
               <Image
-                unoptimized
                 src='/doodle_189.svg'
                 alt='doodle!'
                 width={60}

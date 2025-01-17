@@ -15,7 +15,6 @@ export default function Page() {
             as={<h1 />}
           />
           <Image
-            unoptimized
             src='/doodle_189.svg'
             alt='doodle!'
             width={100}

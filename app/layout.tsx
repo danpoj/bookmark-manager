@@ -79,7 +79,6 @@ export default async function RootLayout({
           {children}
 
           <Image
-            unoptimized
             src='/wave-light.svg'
             alt='background pattern'
             width={400}

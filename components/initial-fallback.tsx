@@ -7,7 +7,6 @@ export const InitialFallback = () => {
         <div className='flex'>
           <h1 className='text-5xl font-bold'>Bookmarks</h1>
           <Image
-            unoptimized
             src='/doodle_189.svg'
             alt='doodle!'
             width={100}

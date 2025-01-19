@@ -70,10 +70,8 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en' suppressHydrationWarning className='text-[19px]'>
-      <body
-        className={`bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden text-[18px]`}
-      >
+    <html lang='en' suppressHydrationWarning className='text-[20px]'>
+      <body className='bg-[#fafafa] dark:bg-[#0a0a0a] overscroll-none overflow-y-hidden text-[18px]'>
         <Providers>
           <ParticlesBackground />
           {children}

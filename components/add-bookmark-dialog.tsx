@@ -26,6 +26,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { LoadingDots } from '@/components/loading-dots';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 const formSchema = z.object({
   url: z.string().url({ message: '주소를 다시 확인해주세요.' }),
@@ -62,11 +68,21 @@ export const AddBookmarkDialog = ({
 
   return (
     <Dialog open={openDialog} onOpenChange={(o) => setOpenDialog(o)}>
-      <DialogTrigger asChild>
-        <Button size='icon' variant='secondary' className='size-8'>
-          <PlusIcon className='size-3.5' />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button size='icon' variant='secondary' className='size-8'>
+                <PlusIcon className='size-3.5' />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent side='bottom'>
+            <p>add bookmark</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>🔗 Add new bookmark</DialogTitle>

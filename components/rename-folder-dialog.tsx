@@ -25,6 +25,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { LoadingDots } from '@/components/loading-dots';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 const formSchema = z.object({
   name: z.string().min(1).max(50),
@@ -61,11 +67,21 @@ export const RenameFolderDialog = ({
 
   return (
     <Dialog open={openDialog} onOpenChange={(o) => setOpenDialog(o)}>
-      <DialogTrigger asChild>
-        <Button variant='secondary' className='size-8' size='icon'>
-          <PencilIcon className='size-3.5' />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button variant='secondary' className='size-8' size='icon'>
+                <PencilIcon className='size-3.5' />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent side='bottom'>
+            <p>rename folder</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>✏️ Update folder name</DialogTitle>

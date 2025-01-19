@@ -18,6 +18,12 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { LoadingDots } from '@/components/loading-dots';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -43,11 +49,21 @@ export const AddFolderDialog = () => {
 
   return (
     <Dialog open={open} onOpenChange={(o) => setOpen(o)}>
-      <DialogTrigger asChild>
-        <Button size='icon' variant='secondary' className='size-8'>
-          <PlusIcon className='size-3.5' />
-        </Button>
-      </DialogTrigger>
+      <TooltipProvider>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <DialogTrigger asChild>
+              <Button size='icon' variant='secondary' className='size-8'>
+                <PlusIcon className='size-3.5' />
+              </Button>
+            </DialogTrigger>
+          </TooltipTrigger>
+          <TooltipContent side='bottom'>
+            <p>add folder</p>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+
       <DialogContent>
         <DialogHeader>
           <DialogTitle>📂 Add new folder</DialogTitle>

@@ -78,7 +78,8 @@ export const useLoginMutation = () => {
           redirectTo: `${location.origin}/auth/callback`,
         },
       });
-
+    },
+    onSuccess: () => {
       client.invalidateQueries();
     },
   });
@@ -86,14 +87,14 @@ export const useLoginMutation = () => {
 
 export const useLogoutMutation = () => {
   const client = useQueryClient();
-  const router = useRouter();
 
   return useMutation({
     mutationFn: async () => {
       const supabase = dbClient();
       await supabase.auth.signOut();
+    },
+    onSuccess: () => {
       client.invalidateQueries();
-      router.refresh();
     },
   });
 };
@@ -121,7 +122,8 @@ export const useAddFolderMutation = () => {
         name,
         user_id: user.id,
       });
-
+    },
+    onSuccess: () => {
       client.invalidateQueries({ queryKey: ['folders'] });
     },
   });
@@ -165,7 +167,8 @@ export const useAddBookmarkMutation = () => {
         toast.error('failed to add bookmark.');
         return;
       }
-
+    },
+    onSuccess: (_, { folderId }) => {
       client.invalidateQueries({ queryKey: ['bookmarks', folderId] });
     },
   });
@@ -179,7 +182,7 @@ export const useDeleteBookmarkMutation = () => {
     Error,
     { bookmarkId: Tables<'bookmarks'>['id']; folderId: string }
   >({
-    mutationFn: async ({ bookmarkId, folderId }) => {
+    mutationFn: async ({ bookmarkId }) => {
       const user = await getSession();
       if (!user) return;
 
@@ -189,7 +192,8 @@ export const useDeleteBookmarkMutation = () => {
         .delete()
         .eq('id', bookmarkId)
         .eq('user_id', user.id);
-
+    },
+    onSuccess: (_, { folderId }) => {
       client.invalidateQueries({
         queryKey: ['bookmarks', folderId],
       });
@@ -209,7 +213,7 @@ export const useUpdateBookmarkTitleMutation = () => {
       folderId: string;
     }
   >({
-    mutationFn: async ({ title, bookmarkId, folderId }) => {
+    mutationFn: async ({ title, bookmarkId }) => {
       const user = await getSession();
 
       if (!user) return;
@@ -220,7 +224,8 @@ export const useUpdateBookmarkTitleMutation = () => {
         .update({ title })
         .eq('id', bookmarkId)
         .eq('user_id', user.id);
-
+    },
+    onSuccess: (_, { folderId }) => {
       client.invalidateQueries({
         queryKey: ['bookmarks', folderId],
       });
@@ -242,7 +247,8 @@ export const useDeleteFolderMutation = () => {
         .delete()
         .eq('id', folderId)
         .eq('user_id', user.id);
-
+    },
+    onSuccess: (_, { folderId }) => {
       client.invalidateQueries({ queryKey: ['bookmarks', String(folderId)] });
       client.invalidateQueries({ queryKey: ['folders'] });
     },
@@ -267,7 +273,8 @@ export const useRenameFolderMutation = () => {
         .update({ name })
         .eq('id', folderId)
         .eq('user_id', user.id);
-
+    },
+    onSuccess: () => {
       client.invalidateQueries({ queryKey: ['folders'] });
     },
   });

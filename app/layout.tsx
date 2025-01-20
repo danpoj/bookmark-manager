@@ -6,11 +6,11 @@ import Image from 'next/image';
 import './globals.css';
 
 export const metadata: Metadata = {
-  applicationName: '로나오프',
+  applicationName: siteConfig.name,
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
-    title: '로나오프',
+    title: siteConfig.name,
   },
   formatDetection: {
     telephone: false,
@@ -55,8 +55,6 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: '/favicon.ico',
-    shortcut: '/favicon-16x16.png',
-    apple: '/apple-touch-icon.png',
   },
 };
 
